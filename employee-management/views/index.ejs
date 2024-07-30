@@ -1,0 +1,65 @@
+<%- include('layout') %>
+
+    <div class="header">
+        <h1>Employee Management</h1>
+        <a href="/employees/new" class="btn">Add Employee</a>
+        <input type="text" id="searchBox" placeholder="Search employees...">
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Title</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="employeeTable">
+            <% employees.forEach(employee=> { %>
+                <tr>
+                    <td>
+                        <%= employee._id %>
+                    </td>
+                    <td>
+                        <%= employee.name %>
+                    </td>
+                    <td>
+                        <%= employee.email %>
+                    </td>
+                    <td>
+                        <%= employee.mobile %>
+                    </td>
+                    <td>
+                        <%= employee.title %>
+                    </td>
+                    <td>
+                        <%= employee.role %>
+                    </td>
+                    <td>
+                        <a href="/employees/edit/<%= employee._id %>" class="btn">Edit</a>
+                        <form action="/employees/delete/<%= employee._id %>" method="POST" style="display:inline;">
+                            <button type="submit" class="btn">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('searchBox').addEventListener('keyup', function () {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#employeeTable tr');
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const text = Array.from(cells).map(cell => cell.textContent.toLowerCase()).join(' ');
+
+                row.style.display = text.includes(filter) ? '' : 'none';
+            });
+        });
+    </script>

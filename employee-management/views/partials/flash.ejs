@@ -1,0 +1,10 @@
+<% if (success_msg) { %>
+    <script>
+        toastr.success('<%= success_msg %>');
+    </script>
+    <% } %>
+        <% if (error_msg) { %>
+            <script>
+                toastr.error('<%= error_msg %>');
+            </script>
+            <% } %>
